@@ -74,13 +74,13 @@ class App extends Component {
                     throw new Error('Validation failed.');
                 }
                 if (res.status !== 200 && res.status !== 201) {
-                    console.log('Error!');
+                    // console.log('Error!');
                     throw new Error('Could not authenticate you!');
                 }
                 return res.json();
             })
             .then(resData => {
-                console.log(resData);
+                // console.log(resData);
                 this.setState({
                     isAuth: true,
                     token: resData.token,
@@ -97,7 +97,7 @@ class App extends Component {
                 this.setAutoLogout(remainingMilliseconds);
             })
             .catch(err => {
-                console.log(err);
+                // console.log(err);
                 this.setState({
                     isAuth: false,
                     authLoading: false,
@@ -107,7 +107,7 @@ class App extends Component {
     };
 
     signupHandler = (event, authData) => {
-        console.log(authData);
+        // console.log(authData);
         event.preventDefault();
         this.setState({ authLoading: true });
         fetch('https://node-app-server-live.herokuapp.com/auth/signup', {
@@ -122,25 +122,25 @@ class App extends Component {
             })
         })
             .then(res => {
-                console.log(res);
+                // console.log(res);
                 if (res.status === 422) {
                     throw new Error(
                         "Validation failed."
                     );
                 }
                 if (res.status !== 200 && res.status !== 201) {
-                    console.log('Error!');
+                    // console.log('Error!');
                     throw new Error('Creating a user failed!');
                 }
                 return res.json();
             })
             .then(resData => {
-                console.log(resData);
+                // console.log(resData);
                 this.setState({ isAuth: false, authLoading: false });
                 this.props.history.replace('/');
             })
             .catch(err => {
-                console.log(err);
+                // console.log(err);
                 this.setState({
                     isAuth: false,
                     authLoading: false,

@@ -23,7 +23,11 @@ class Feed extends Component {
     };
 
     componentDidMount() {
-        fetch('URL')
+        fetch('https://node-app-server-live.herokuapp.com/auth/status', {
+            headers: {
+                Authorization: 'Bearer ' + this.props.token
+            }
+        })
             .then(res => {
                 if (res.status !== 200) {
                     throw new Error('Failed to fetch user status.');
@@ -118,7 +122,16 @@ class Feed extends Component {
 
     statusUpdateHandler = event => {
         event.preventDefault();
-        fetch('URL')
+        fetch('https://node-app-server-live.herokuapp.com/auth/status', {
+            method: 'PATCH',
+            headers: {
+                Authorization: 'Bearer ' + this.props.token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                status: this.state.status
+            })
+        })
             .then(res => {
                 if (res.status !== 200 && res.status !== 201) {
                     throw new Error("Can't update status!");
@@ -126,7 +139,7 @@ class Feed extends Component {
                 return res.json();
             })
             .then(resData => {
-                console.log(resData);
+                // console.log(resData);
             })
             .catch(this.catchError);
     };
@@ -207,7 +220,7 @@ class Feed extends Component {
                 });
             })
             .catch(err => {
-                console.log(err);
+                // console.log(err);
                 this.setState({
                     isEditing: false,
                     editPost: null,
@@ -236,7 +249,7 @@ class Feed extends Component {
                 return res.json();
             })
             .then(resData => {
-                console.log(resData);
+                // console.log(resData);
                 this.loadPosts();
                 /* this.setState(prevState => {
                     const updatedPosts = prevState.posts.filter(p => p._id !== postId);
@@ -244,7 +257,7 @@ class Feed extends Component {
                 }); */
             })
             .catch(err => {
-                console.log(err);
+                // console.log(err);
                 this.setState({ postsLoading: false });
             });
     };
